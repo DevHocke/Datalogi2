@@ -6,7 +6,8 @@ namespace Datalogi2
     {
         static void Main(string[] args)
         {
-            new Menu().MainMenu();
+            var app = new App();
+            app.Start();
         }
     }
 }

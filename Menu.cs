@@ -6,7 +6,7 @@ namespace Datalogi2
 {
     class Menu
     {
-        public void MainMenu()
+        public static void MainMenu()
         {
             var exit = false;
             while (!exit)
@@ -37,7 +37,6 @@ namespace Datalogi2
                         Console.WriteLine("\tInvalid input! Press any key to try again...");
                         Console.ReadKey();
                         break;
-                   
                 }
             }
         }
