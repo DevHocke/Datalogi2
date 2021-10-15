@@ -1,0 +1,2 @@
+As a CLI implementation of the foundational Standard Libraries,[41] CoreFX shares a subset of .NET Framework APIs, however, it also comes with its own APIs that are not part of the .NET Framework.[33] A variant of the .NET library is used for UWP.[42]
+The .NET command-line interface offers an execution entry point for operating systems and provides developer services like compilation and package management.[43]
