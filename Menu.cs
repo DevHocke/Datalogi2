@@ -22,7 +22,7 @@ namespace Datalogi2
                 switch (choice)
                 {
                     case 1:
-                        SearchForWord();
+                        App.SearchForAWord();
                         break;
                     case 2:
                         PrintDataStructure();
@@ -41,10 +41,6 @@ namespace Datalogi2
             }
         }
 
-        private static void SearchForWord()
-        {
-        }
-
         private static void PrintDataStructure()
         {
         }
@@ -53,8 +49,5 @@ namespace Datalogi2
         {
         }
 
-        private static void Exit()
-        {
-        }
     }
 }

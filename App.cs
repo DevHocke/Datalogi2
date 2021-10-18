@@ -6,11 +6,13 @@ namespace Datalogi2
 {
     class App
     {
+        static string[][] textFiles = new string[3][];
         public void Start()
         {
-            var array1 = TurnTextFileToArray(GetTextFile("Text_1.txt"));
-            var array2 = TurnTextFileToArray(GetTextFile("Text_2.txt"));
-            var array3 = TurnTextFileToArray(GetTextFile("Text_3.txt"));
+            textFiles[0] = TurnTextFileToArray(GetTextFile("Text_1.txt"));
+            textFiles[1] = TurnTextFileToArray(GetTextFile("Text_2.txt"));
+            textFiles[2] = TurnTextFileToArray(GetTextFile("Text_3.txt"));
+
             Menu.MainMenu();
         }
 
@@ -19,15 +21,38 @@ namespace Datalogi2
             return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName));
         }
 
+        /// <summary>
+        /// Takes a string and removes characters that are not letters and stores it in an array.
+        /// </summary>
+        /// <param name="textFile">The textfile that will be turned into an array.</param>
+        /// <returns>array with unwanted characters removed, words separated with a space.</returns>
         public static string[] TurnTextFileToArray(string textFile)
         {
-            var array = textFile.Split(" ");
-            for (int i = 0; i < array.Length; i++)
+            textFile = Regex.Replace(textFile.ToLower().Trim(), @"[\t]", " ");
+            textFile = Regex.Replace(textFile, @"[^a-z\s]", "");
+            return textFile.Split(" ");
+        }
+        
+        public static void SearchForAWord()
+        {
+            Console.Write("\n\tEnter a word to search for: ");
+            var searchWord = Console.ReadLine().ToLower().Trim();
+            Console.WriteLine($"\tThe word '{searchWord}' was found: ");
+            for (int i = 0; i < textFiles.Length; i++)
             {
-                array[i] = Regex.Replace(array[i], @"[^\w]", "");
+                int counter = 0;
+                foreach (var word in textFiles[i])
+                {
+                    if (word == searchWord)
+                    {
+                        counter++;
+                    }
+                }
+                var times = counter == 1 ? "time" : "times";
+                Console.WriteLine($"\t{counter} {times} in textfile {i + 1}");
             }
 
-            return array;
+            Console.ReadKey();
         }
     }
 }
