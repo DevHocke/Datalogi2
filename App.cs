@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Datalogi2
@@ -40,16 +41,11 @@ namespace Datalogi2
             Console.WriteLine($"\tThe word '{searchWord}' was found: ");
             for (int i = 0; i < textFiles.Length; i++)
             {
-                int counter = 0;
-                foreach (var word in textFiles[i])
-                {
-                    if (word == searchWord)
-                    {
-                        counter++;
-                    }
-                }
-                var times = counter == 1 ? "time" : "times";
-                Console.WriteLine($"\t{counter} {times} in textfile {i + 1}");
+                var matchingWords = textFiles[i].Where(x => x == searchWord);
+                var amount = matchingWords.Count();
+                var times = amount == 1 ? "time" : "times";
+                Console.WriteLine($"\t{amount} {times} in textfile {i + 1}");
+                Console.ReadKey();
             }
 
             Console.ReadKey();
