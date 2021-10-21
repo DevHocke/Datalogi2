@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Datalogi2
 {
@@ -44,24 +45,30 @@ namespace Datalogi2
             var search = new Search(Console.ReadLine().Trim().ToLower());
             search.Results = ReversedBubbleSort(GetResults(search.Word));
             Print(search.Results, $"\n\tThe word '{search.Word}' was found:");
+            DoYouWantToSave(search);
+            Thread.Sleep(2000);
+        }
+
+        private static void DoYouWantToSave(Search search)
+        {
             Console.WriteLine($"\n\tDo you want to save the search to the data structure (y/n): ");
             var choice = Console.ReadLine();
-            if (string.Equals(choice.Trim(), "y", StringComparison.OrdinalIgnoreCase))
+            if (choice.Trim().ToLower() == "y")
             {
                 searches.Add(search);
-                Console.WriteLine("\n\tThe search was saved");
+                Console.WriteLine("\n\tThe search was saved to the data structure");
             }
-            Console.ReadKey();
         }
 
         private static string[] ReversedBubbleSort(string[] results)
         {
             for (int i = 0; i < results.Length - 1; i++)
             {
+                var swapped = false;
                 for (int j = 0; j < results.Length - i - 1; j++)
                 {
                     int.TryParse(results[j].Substring(0, results[j].IndexOf(' ')), out var val1);
-                    int.TryParse(results[j + 1].Substring(0, results[j +1].IndexOf(' ')), out var val2);
+                    int.TryParse(results[j + 1].Substring(0, results[j + 1].IndexOf(' ')), out var val2);
                     if (val1 < val2)
                     {
                         var tmp = results[j];
@@ -69,13 +76,16 @@ namespace Datalogi2
                         results[j + 1] = tmp;
                     }
                 }
+                if (!swapped)
+                    break;
+
             }
             return results;
         }
 
         private static string[] GetResults(string search)
         {
-            var results = new string[Size]; 
+            var results = new string[Size];
             for (int i = 0; i < chapters.Length; i++)
             {
                 var counter = 0;
