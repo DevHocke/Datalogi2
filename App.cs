@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,6 +10,7 @@ namespace Datalogi2
     {
         public const int Size = 3;
         static string[][] chapters = new string[Size][];
+        static List<Search> searches = new List<Search>();
         public void Start()
         {
             for (int i = 0; i < Size; i++)
@@ -40,29 +42,15 @@ namespace Datalogi2
         {
             Console.Write("\n\tEnter a word to search for: ");
             var search = new Search(Console.ReadLine().Trim().ToLower());
-
-            for (int i = 0; i < chapters.Length; i++)
+            search.Results = ReversedBubbleSort(GetResults(search.Word));
+            Print(search.Results, $"\n\tThe word '{search.Word}' was found:");
+            Console.WriteLine($"\n\tDo you want to save the search to the data structure (y/n): ");
+            var choice = Console.ReadLine();
+            if (string.Equals(choice.Trim(), "y", StringComparison.OrdinalIgnoreCase))
             {
-                var counter = 0;
-                foreach (var word in chapters[i])
-                {
-                    if (word == search.Word)
-                    {
-                        counter++;
-                    }
-                }
-
-                var times = counter != 1 ? "times" : "time";
-                search.Results[i] = $"\t{counter} {times} in chapter {i + 1}";
+                searches.Add(search);
+                Console.WriteLine("\n\tThe search was saved");
             }
-
-            search.Results = ReversedBubbleSort(search.Results);
-            Console.WriteLine($"\n\tThe word '{search.Word}' was found: ");
-            foreach (var result in search.Results)
-            {
-                Console.WriteLine(result);
-            }
-
             Console.ReadKey();
         }
 
@@ -83,6 +71,36 @@ namespace Datalogi2
                 }
             }
             return results;
+        }
+
+        private static string[] GetResults(string search)
+        {
+            var results = new string[Size]; 
+            for (int i = 0; i < chapters.Length; i++)
+            {
+                var counter = 0;
+                foreach (var word in chapters[i])
+                {
+                    if (word == search)
+                    {
+                        counter++;
+                    }
+                }
+
+                var times = counter != 1 ? "times" : "time";
+                results[i] = $"\t{counter} {times} in chapter {i + 1}";
+            }
+
+            return results;
+        }
+
+        private static void Print(string[] arr, string message = "")
+        {
+            Console.WriteLine(message);
+            foreach (var item in arr)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
