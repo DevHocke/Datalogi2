@@ -6,8 +6,9 @@ namespace Datalogi2
 {
     class Menu
     {
-        public static void MainMenu()
+        public void MainMenu()
         {
+            var app = new App();
             var exit = false;
             while (!exit)
             {
@@ -22,13 +23,13 @@ namespace Datalogi2
                 switch (choice)
                 {
                     case 1:
-                        App.SearchForAWord();
+                        app.SearchForAWord();
                         break;
                     case 2:
-                        PrintDataStructure();
+                        app.PrintDataStructure();
                         break;
                     case 3:
-                        PrintWordsAlphabetically();
+                        app.PrintWordsAlphabetically();
                         break;
                     case 4:
                         exit = true;
@@ -39,14 +40,6 @@ namespace Datalogi2
                         break;
                 }
             }
-        }
-
-        private static void PrintDataStructure()
-        {
-        }
-
-        private static void PrintWordsAlphabetically()
-        {
         }
 
     }

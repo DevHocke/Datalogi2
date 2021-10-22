@@ -11,35 +11,19 @@ namespace Datalogi2
     {
         public const int Size = 3;
         static string[][] chapters = new string[Size][];
-        static List<Search> searches = new List<Search>();
+        Dictionary<string, string[]> searches = new Dictionary<string, string[]>();
         public void Start()
         {
+            Menu menu = new Menu();
             for (int i = 0; i < Size; i++)
             {
                 chapters[i] = TurnChapterToArray(GetChapter($"Chapter_{i + 1}.txt"));
             }
 
-            Menu.MainMenu();
+            menu.MainMenu();
         }
 
-        public static string GetChapter(string fileName)
-        {
-            return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName));
-        }
-
-        /// <summary>
-        /// Takes a string and removes characters that are not letters and stores it in an array.
-        /// </summary>
-        /// <param name="chapter">The chapter that will be turned into an array.</param>
-        /// <returns>An array of words without unwanted characters.</returns>
-        public static string[] TurnChapterToArray(string chapter)
-        {
-            chapter = Regex.Replace(chapter, @"[^\w\s]", "");
-            chapter = Regex.Replace(chapter, @"\s+", " ");
-            return chapter.Split(" ");
-        }
-
-        public static void SearchForAWord()
+        public void SearchForAWord()
         {
             Console.Write("\n\tEnter a word to search for: ");
             var search = new Search(Console.ReadLine().Trim().ToLower());
@@ -50,24 +34,97 @@ namespace Datalogi2
             Thread.Sleep(2000);
         }
 
-        private static void DoYouWantToSave(Search search)
+        public void PrintDataStructure()
+        {
+            var ctr = 1;
+            foreach (var search in searches)
+            {
+                Console.WriteLine($"\n\t{ctr++}. {search.Key} was found:");
+                foreach (var result in search.Value)
+                {
+                    Console.WriteLine(result);
+                }
+            }
+
+            Console.ReadLine();
+        }
+
+        public void PrintWordsAlphabetically()
+        {
+            Console.Write("\n\tHow many words do you want to print? ");
+            if (int.TryParse(Console.ReadLine(), out var choice))
+            {
+                for (int i = 0; i < chapters.Length; i++)
+                {
+                    Array.Sort(chapters[i]);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"\n\tChapter {i + 1}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    for (int j = 0; j < choice; j++)
+                    {
+                        if (j % 10 == 0)
+                        {
+                            Console.Write("\n\t");
+                        }
+
+                        if (j < chapters[i].Length)
+                        {
+                            Console.Write(chapters[i][j] + " ");
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                   Console.WriteLine();
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        private string GetChapter(string fileName)
+        {
+            return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName));
+        }
+
+        /// <summary>
+        /// Takes a string and removes characters that are not letters and stores it in an array.
+        /// </summary>
+        /// <param name="chapter">The chapter that will be turned into an array.</param>
+        /// <returns>An array of words without unwanted characters.</returns>
+        private string[] TurnChapterToArray(string chapter)
+        {
+            chapter = Regex.Replace(chapter, @"[^\w\s]", "");
+            chapter = Regex.Replace(chapter, @"\s+", " ");
+            return chapter.Split(" ");
+        }
+
+        private void DoYouWantToSave(Search search)
         {
             Console.WriteLine($"\n\tDo you want to save the search to the data structure (y/n): ");
             var choice = Console.ReadLine();
             if (choice.Trim().ToLower() == "y")
             {
-                searches.Add(search);
-                Console.WriteLine("\n\tThe search was saved to the data structure");
+                try
+                {
+                    searches.Add(search.Word, search.Results);
+                    Console.WriteLine("\tThe search was saved to the data structure");
+                }
+                catch
+                {
+                    Console.WriteLine("\tThe search already exists in the data structure");
+                }
             }
         }
-       
 
         /// <summary>
         /// Hello.
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        private static string[] GetResults(string search)
+        private string[] GetResults(string search)
         {
             var results = new string[Size];
             for (int i = 0; i < chapters.Length; i++)
@@ -88,7 +145,7 @@ namespace Datalogi2
             return results;
         }
 
-        private static void Print(string[] arr, string message = "")
+        private void Print(string[] arr, string message = "")
         {
             Console.WriteLine(message);
             foreach (var item in arr)
