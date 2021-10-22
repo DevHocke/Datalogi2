@@ -43,7 +43,8 @@ namespace Datalogi2
         {
             Console.Write("\n\tEnter a word to search for: ");
             var search = new Search(Console.ReadLine().Trim().ToLower());
-            search.Results = ReversedBubbleSort(GetResults(search.Word));
+            search.Results = GetResults(search.Word);
+            search.Results.ReversedInsertionSort();
             Print(search.Results, $"\n\tThe word '{search.Word}' was found:");
             DoYouWantToSave(search);
             Thread.Sleep(2000);
@@ -59,30 +60,13 @@ namespace Datalogi2
                 Console.WriteLine("\n\tThe search was saved to the data structure");
             }
         }
+       
 
-        private static string[] ReversedBubbleSort(string[] results)
-        {
-            for (int i = 0; i < results.Length - 1; i++)
-            {
-                var swapped = false;
-                for (int j = 0; j < results.Length - i - 1; j++)
-                {
-                    int.TryParse(results[j].Substring(0, results[j].IndexOf(' ')), out var val1);
-                    int.TryParse(results[j + 1].Substring(0, results[j + 1].IndexOf(' ')), out var val2);
-                    if (val1 < val2)
-                    {
-                        var tmp = results[j];
-                        results[j] = results[j + 1];
-                        results[j + 1] = tmp;
-                    }
-                }
-                if (!swapped)
-                    break;
-
-            }
-            return results;
-        }
-
+        /// <summary>
+        /// Hello.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         private static string[] GetResults(string search)
         {
             var results = new string[Size];
