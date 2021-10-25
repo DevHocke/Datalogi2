@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -11,7 +9,7 @@ namespace Datalogi2
     {
         public const int Size = 3;
         static string[][] chapters = new string[Size][];
-        Dictionary<string, string[]> searches = new Dictionary<string, string[]>();
+        BinaryTree searches = new BinaryTree();
         public void Start()
         {
             Menu menu = new Menu();
@@ -26,26 +24,17 @@ namespace Datalogi2
         public void SearchForAWord()
         {
             Console.Write("\n\tEnter a word to search for: ");
-            var search = new Search(Console.ReadLine().Trim().ToLower());
+            var search = new Search(Console.ReadLine().Trim());
             search.Results = GetResults(search.Word);
             search.Results.ReversedInsertionSort();
-            Print(search.Results, $"\n\tThe word '{search.Word}' was found:");
-            DoYouWantToSave(search);
+            Console.WriteLine(search);
+            AddToBinaryTree(search);
             Thread.Sleep(2000);
         }
 
-        public void PrintDataStructure()
+        public void TraverseBinaryTree()
         {
-            var ctr = 1;
-            foreach (var search in searches)
-            {
-                Console.WriteLine($"\n\t{ctr++}. {search.Key} was found:");
-                foreach (var result in search.Value)
-                {
-                    Console.WriteLine(result);
-                }
-            }
-
+            searches.Traverse();
             Console.ReadLine();
         }
 
@@ -77,7 +66,7 @@ namespace Datalogi2
                         }
                     }
 
-                   Console.WriteLine();
+                    Console.WriteLine();
                 }
             }
 
@@ -101,21 +90,14 @@ namespace Datalogi2
             return chapter.Split(" ");
         }
 
-        private void DoYouWantToSave(Search search)
+        private void AddToBinaryTree(Search search)
         {
-            Console.WriteLine($"\n\tDo you want to save the search to the data structure (y/n): ");
+            Console.Write($"\n\tDo you want to save the search to the binary tree (y/n): ");
             var choice = Console.ReadLine();
             if (choice.Trim().ToLower() == "y")
             {
-                try
-                {
-                    searches.Add(search.Word, search.Results);
-                    Console.WriteLine("\tThe search was saved to the data structure");
-                }
-                catch
-                {
-                    Console.WriteLine("\tThe search already exists in the data structure");
-                }
+                searches.Add(search);
+                Console.WriteLine("\tThe search was saved to the binary tree.");
             }
         }
 
@@ -143,15 +125,6 @@ namespace Datalogi2
             }
 
             return results;
-        }
-
-        private void Print(string[] arr, string message = "")
-        {
-            Console.WriteLine(message);
-            foreach (var item in arr)
-            {
-                Console.WriteLine(item);
-            }
         }
     }
 }

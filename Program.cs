@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Datalogi2
+﻿namespace Datalogi2
 {
     class Program
     {

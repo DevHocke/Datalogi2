@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Datalogi2
 {
-    class Tree
+    class BinaryTree
     {
         class Node
         {
@@ -49,6 +48,30 @@ namespace Datalogi2
                     return;
                 }
             }
+        }
+
+        public void Traverse()
+        {
+            if (root == null)
+            {
+                Console.WriteLine("\n\tThe binary tree is empty.");
+            }
+            else
+            {
+                InorderTraverse(root);
+            }
+        }
+
+        private void InorderTraverse(Node node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            InorderTraverse(node.LeftChild);
+            Console.WriteLine(node.Data);
+            InorderTraverse(node.RightChild);
         }
     }
 }

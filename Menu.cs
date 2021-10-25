@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Datalogi2
 {
@@ -15,7 +13,7 @@ namespace Datalogi2
                 Console.Clear();
                 Console.WriteLine("\n\tWhat do you want to do?");
                 Console.WriteLine("\n\t1. Search for a word.");
-                Console.WriteLine("\t2. Print data structure.");
+                Console.WriteLine("\t2. Print binary tree.");
                 Console.WriteLine("\t3. Print first x words in alphabetic order.");
                 Console.WriteLine("\t4. Exit.");
                 Console.Write("\t> ");
@@ -26,7 +24,7 @@ namespace Datalogi2
                         app.SearchForAWord();
                         break;
                     case 2:
-                        app.PrintDataStructure();
+                        app.TraverseBinaryTree();
                         break;
                     case 3:
                         app.PrintWordsAlphabetically();
@@ -41,6 +39,5 @@ namespace Datalogi2
                 }
             }
         }
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Datalogi2
+﻿namespace Datalogi2
 {
     static class Algoritm
     {
@@ -10,21 +6,19 @@ namespace Datalogi2
         /// Compares each result j with result j - 1. If result j is greater the results are swapped.
         /// Worst case O(n^2) but is very fast on small arrays. 
         /// </summary>
-        /// <param name="results">The array to sort.</param>
-        public static void ReversedInsertionSort(this string[] results)
+        /// <param name="arr">The array to sort.</param>
+        public static void ReversedInsertionSort(this string[] arr)
         {
-            for (int i = 1; i < results.Length; i++)
+            for (int i = 1; i < arr.Length; i++)
             {
                 var j = i;
                 while (j > 0)
                 {
-                    int.TryParse(results[j - 1].Substring(0, results[j - 1].IndexOf(' ')), out var val1);
-                    int.TryParse(results[j].Substring(0, results[j].IndexOf(' ')), out var val2);
+                    int.TryParse(arr[j - 1].Substring(0, arr[j - 1].IndexOf(' ')), out var val1);
+                    int.TryParse(arr[j].Substring(0, arr[j].IndexOf(' ')), out var val2);
                     if (val1 < val2)
                     {
-                        var tmp = results[j];
-                        results[j] = results[j - 1];
-                        results[j - 1] = tmp;
+                        Swap(arr, j, j - 1);
                         j--;
                     }
                     else
@@ -33,6 +27,13 @@ namespace Datalogi2
                     }
                 }
             }
+        }
+
+        private static void Swap(string[] arr,int i, int j)
+        {
+            var temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
     }
 }
