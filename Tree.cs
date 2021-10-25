@@ -20,34 +20,35 @@ namespace Datalogi2
 
         private Node root = null;
 
+        private Queue<Node> q = new Queue<Node>();
+
         public void Add(Search search)
         {
+            var newNode = new Node(search);
+
             if (root == null) // Om trädet är tomt så ge roten värdet av första sökningen.
             {
-                root = new Node(search);
+                root = newNode;
+                q.Enqueue(newNode);
             }
             else
             {
-                Add(search, root);
+                var node = q.Peek();
+                if (node.LeftChild == null)
+                {
+                    node.LeftChild = newNode;
+                    q.Enqueue(newNode);
+                    return;
+                }
+
+                if (node.RightChild == null)
+                {
+                    node.RightChild = newNode;
+                    q.Enqueue(newNode);
+                    q.Dequeue();
+                    return;
+                }
             }
-        }
-
-        private void Add(Search search, Node node)
-        {
-            if (node.LeftChild == null)
-            {
-                node.LeftChild = new Node(search);
-                return;
-            }
-
-            if (node.RightChild == null)
-            {
-                node.RightChild = new Node(search);
-                return;
-            }
-
-            
-
         }
     }
 }
