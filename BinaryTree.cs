@@ -22,6 +22,10 @@ namespace Datalogi2
             /// </summary>
             public Node RightChild { get; set; } = null;
 
+            /// <summary>
+            /// The constructor.
+            /// </summary>
+            /// <param name="data">The data to add to the node.</param>
             public Node(Search data)
             {
                 Data = data;
