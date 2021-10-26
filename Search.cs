@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Datalogi2
 {
@@ -12,16 +13,15 @@ namespace Datalogi2
             Word = word;
         }
 
-        public override string ToString()
+        public void Print()
         {
-            var sb = new StringBuilder();
-            sb.AppendLine($"\n\t{Word} was found:");
+            Console.Write("\n\tThe Word ");
+            Color.InBlue(Word);
+            Console.WriteLine(" was found:");
             foreach (var result in Results)
             {
-                sb.AppendLine(result);
+                Console.WriteLine(result);
             }
-
-            return sb.ToString();
         }
     }
 }

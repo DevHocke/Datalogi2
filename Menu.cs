@@ -17,7 +17,7 @@ namespace Datalogi2
                 Console.WriteLine("\t3. Print first x words in alphabetic order.");
                 Console.WriteLine("\t4. Exit.");
                 Console.Write("\t> ");
-                int.TryParse(Console.ReadLine(), out var choice);
+                int.TryParse(Color.Getinput(), out var choice);
                 switch (choice)
                 {
                     case 1:
@@ -33,7 +33,7 @@ namespace Datalogi2
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("\tInvalid input! Press any key to try again...");
+                        Color.InRed("\tInvalid input! Press any key to try again...");
                         Console.ReadKey();
                         break;
                 }

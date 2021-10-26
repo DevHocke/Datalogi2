@@ -70,7 +70,7 @@ namespace Datalogi2
             }
 
             InorderTraverse(node.LeftChild);
-            Console.WriteLine(node.Data);
+            node.Data.Print();
             InorderTraverse(node.RightChild);
         }
     }

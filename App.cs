@@ -26,10 +26,10 @@ namespace Datalogi2
         public void SearchForAWord()
         {
             Console.Write("\n\tEnter a word to search for: ");
-            var search = new Search(Console.ReadLine().Trim());
+            var search = new Search(Color.Getinput().Trim());
             search.Results = GetResults(search.Word);
             search.Results.ReversedInsertionSort();
-            Console.WriteLine(search);
+            search.Print();
             AddToBinaryTree(search);
             Thread.Sleep(2000);
         }
@@ -43,22 +43,17 @@ namespace Datalogi2
         public void PrintWordsAlphabetically()
         {
             Console.Write("\n\tHow many words do you want to print? ");
-            if (int.TryParse(Console.ReadLine(), out var choice))
+            if (int.TryParse(Color.Getinput(), out var choice))
             {
                 for (int i = 0; i < chapters.Length; i++)
                 {
-                    var sw = new Stopwatch();
-                    sw.Start();
                     if (!isSorted)
                     {
                         chapters[i].Quicksort();
                     }
-                    sw.Stop();
-                    Console.WriteLine(sw.ElapsedMilliseconds);
 
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"\n\tChapter {i + 1}");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Color.InBlue($"\n\tChapter {i + 1}");
+             
                     for (int j = 0; j < choice; j++)
                     {
                         if (j % 10 == 0)
@@ -83,7 +78,7 @@ namespace Datalogi2
             }
             else
             {
-                Console.WriteLine("\n\tWrong type of input, Please try again. . .");
+                Color.InRed("\n\tWrong type of input, Please try again. . .");
             }
 
             Console.ReadKey();
@@ -113,7 +108,7 @@ namespace Datalogi2
             if (choice.Trim().ToLower() == "y")
             {
                 searches.Add(search);
-                Console.WriteLine("\tThe search was saved to the binary tree.");
+                Color.InGreen("\tThe search was saved to the binary tree.");
             }
         }
 
