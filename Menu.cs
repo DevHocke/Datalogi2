@@ -4,6 +4,9 @@ namespace Datalogi2
 {
     class Menu
     {
+        /// <summary>
+        /// Prints a menu to the console and lets the user choose what to do.
+        /// </summary>
         public void MainMenu()
         {
             var app = new App();
