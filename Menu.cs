@@ -14,6 +14,11 @@ namespace Datalogi2
             while (!exit)
             {
                 Console.Clear();
+                Color.InBlue("\n\t  _______             __\n" +
+                    "\t / ___/ /  ___ ____  / /____ _______\n" +
+                    "\t/ /__/ _ \\/ _ `/ _ \\/ __/ -_) __(_-<\n" +
+                    "\t\\___/_//_/\\_,_/ .__/\\__/\\__/_/ /___/\n" +
+                    "\t             /_/");
                 Console.WriteLine("\n\tWhat do you want to do?");
                 Console.WriteLine("\n\t1. Search for a word.");
                 Console.WriteLine("\t2. Print binary tree.");
