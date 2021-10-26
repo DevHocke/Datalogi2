@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -9,6 +10,7 @@ namespace Datalogi2
     {
         public const int Size = 3;
         static string[][] chapters = new string[Size][];
+        bool isSorted = false;
         BinaryTree searches = new BinaryTree();
         public void Start()
         {
@@ -45,7 +47,15 @@ namespace Datalogi2
             {
                 for (int i = 0; i < chapters.Length; i++)
                 {
-                    Array.Sort(chapters[i]);
+                    var sw = new Stopwatch();
+                    sw.Start();
+                    if (!isSorted)
+                    {
+                        chapters[i].Quicksort();
+                    }
+                    sw.Stop();
+                    Console.WriteLine(sw.ElapsedMilliseconds);
+
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write($"\n\tChapter {i + 1}");
                     Console.ForegroundColor = ConsoleColor.White;
@@ -68,6 +78,12 @@ namespace Datalogi2
 
                     Console.WriteLine();
                 }
+
+                isSorted = true;
+            }
+            else
+            {
+                Console.WriteLine("\n\tWrong type of input, Please try again. . .");
             }
 
             Console.ReadKey();

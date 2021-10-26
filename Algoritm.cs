@@ -29,11 +29,48 @@
             }
         }
 
-        private static void Swap(string[] arr,int i, int j)
+        private static void Swap(string[] arr, int i, int j)
         {
             var temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
         }
+
+        private static int Partition(string[] arr, int left, int right)
+        {
+            var i = left;
+            var pivot = arr[right];
+
+            for (int j = left; j < right; j++)
+            {
+                if (string.Compare(arr[j], pivot) < 0)
+                {
+                    Swap(arr, i, j);
+                    i++;
+                }
+            }
+
+            Swap(arr, i, right);
+            return i;
+        }
+
+        private static void Quicksort(string[] arr, int left, int right)
+        {
+            if (left < right)
+            {
+                var pivot = Partition(arr, left, right);
+                Quicksort(arr, left, pivot - 1);
+                Quicksort(arr, pivot + 1, right);
+            }
+        }
+
+        public static void Quicksort(this string[] arr)
+        {
+            Quicksort(arr, 0, arr.Length - 1);
+        }
     }
 }
+
+
+
+
