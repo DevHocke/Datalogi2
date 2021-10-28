@@ -10,6 +10,11 @@ namespace Datalogi2
         /// <param name="str">The string to print.</param>
         public static void InBlue(string str)
         {
+            if (str == null)
+            {
+                return;
+            }
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(str);
             Console.ForegroundColor = ConsoleColor.White;
@@ -21,6 +26,11 @@ namespace Datalogi2
         /// <param name="str">The string to print.</param>
         public static void InRed(string str)
         {
+            if (str == null)
+            {
+                return;
+            }
+
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write(str);
             Console.ForegroundColor = ConsoleColor.White;
@@ -32,6 +42,11 @@ namespace Datalogi2
         /// <param name="str">The string to print.</param>
         public static void InGreen(string str)
         {
+            if (str == null)
+            {
+                return;
+            }
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(str);
             Console.ForegroundColor = ConsoleColor.White;

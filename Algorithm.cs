@@ -11,6 +11,11 @@
         /// <param name="arr">The array to sort.</param>
         public static void ReversedInsertionSort(this string[] arr)
         {
+            if (arr == null)
+            {
+                return;
+            }
+
             for (int i = 1; i < arr.Length; i++)
             {
                 var j = i;
@@ -98,6 +103,11 @@
         /// <param name="arr">The array to sort.</param>
         public static void Quicksort(this string[] arr)
         {
+            if (arr == null)
+            {
+                return;
+            }
+
             Quicksort(arr, 0, arr.Length - 1);
         }
     }

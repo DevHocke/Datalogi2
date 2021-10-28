@@ -50,7 +50,7 @@ namespace Datalogi2
         {
             Console.Write("\n\tEnter a word to search for: ");
             var search = new Search(Color.Getinput().Trim());
-            search.Results = GetResults(search.Word);
+            GetResults(search, Size - 1);
             search.Results.ReversedInsertionSort();
             search.Print();
             AddToBinaryTree(search);
@@ -83,7 +83,7 @@ namespace Datalogi2
                     }
 
                     Color.InBlue($"\n\tChapter {i + 1}");
-             
+
                     for (int j = 0; j < choice; j++)
                     {
                         if (j % 10 == 0)
@@ -152,31 +152,49 @@ namespace Datalogi2
         }
 
         /// <summary>
-        /// sequentially searches through each chapter finding all
-        /// matching results to the search. Has a time complexity
-        /// of O(n^2).
+        /// Iterates over all the chapters and gets a count on how many times
+        /// the search word appears in every chapter.
+        /// Recursion is used here to get rid of the loop, but it does not change the
+        /// time complexity wich still is O(n). Together with the compare method the
+        /// complete time complexity would be O(n^2).
         /// </summary>
-        /// <param name="search">The word to search for.</param>
-        /// <returns>The results as a string array.</returns>
-        private string[] GetResults(string search)
+        /// <param name="search">The search to compare.</param>
+        /// <param name="chapterIndex">The index of each chapter.</param>
+        private void GetResults(Search search, int chapterIndex)
         {
-            var results = new string[Size];
-            for (int i = 0; i < chapters.Length; i++)
+            if (chapterIndex < 0)
             {
-                var counter = 0;
-                foreach (var word in chapters[i])
-                {
-                    if (word == search)
-                    {
-                        counter++;
-                    }
-                }
-
-                var times = counter != 1 ? "times" : "time";
-                results[i] = $"\t{counter} {times} in chapter {i + 1}";
+                return;
             }
 
-            return results;
+            var counter = Compare(search.Word, chapters[chapterIndex], chapters[chapterIndex].Length - 1);
+            var times = counter != 1 ? "times" : "time";
+            search.Results[chapterIndex] = $"\t{counter} {times} in chapter {chapterIndex + 1}";
+            GetResults(search, chapterIndex - 1);
+        }
+
+        /// <summary>
+        /// Compares a search word with every word in the given chapter.
+        /// Recursion is used here to get rid of the loop, but it does not change the
+        /// time complexity wich still is O(n).
+        /// </summary>
+        /// <param name="searchWord">The word to compare against.</param>
+        /// <param name="chapter">A chapter with words to compare.</param>
+        /// <param name="wordIndex">The index of a word in the chapter.</param>
+        /// <returns>The amount of times the search word appears in the chapter.</returns>
+        private int Compare(string searchWord, string[] chapter, int wordIndex)
+        {
+            if (wordIndex < 0)
+            {
+                return 0;
+            }
+
+            if (searchWord.ToLower() == chapter[wordIndex].ToLower())
+            {
+                return 1 + Compare(searchWord, chapter, wordIndex - 1);
+            }
+
+            return Compare(searchWord, chapter, wordIndex - 1);
         }
     }
 }

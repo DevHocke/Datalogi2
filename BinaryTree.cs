@@ -51,6 +51,11 @@ namespace Datalogi2
         /// <param name="search">The search to add to the binary tree.</param>
         public void Add(Search search)
         {
+            if (search == null)
+            {
+                return;
+            }
+
             var newNode = new Node(search);
 
             // If the binary tree is empty then the search is added as the root.
@@ -99,7 +104,8 @@ namespace Datalogi2
         /// Finds the leaf furthest to the left, prints that node to the console.
         /// Then prints the parent node and then the right leaf. This continues
         /// throughout the entire tree. We used recurtion for this method because
-        /// it is a very effective way to traverse through the tree.
+        /// it is a very effective way to traverse through the tree and lets us
+        /// avoid different checks and conditions.
         /// </summary>
         /// <param name="node"></param>
         private void InorderTraverse(Node node)
